@@ -1,8 +1,10 @@
 plugins {
     id 'java'
-    id("application")
+    //spring boot 2.7.18 支持Java8的最后一个正式版
+    id 'org.springframework.boot' version '2.7.18'
 }
-
+//应用 spring 依赖管理 依赖不用显示指定版本号
+apply plugin: 'io.spring.dependency-management'
 group = 'com.yzr'
 version = '1.0-SNAPSHOT'
 
@@ -11,12 +13,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
-application {
-    mainClass = 'com.yzr.resource.layout.background.Application'
-}
+
 test {
-    useJUnitPlatform()
+
 }
