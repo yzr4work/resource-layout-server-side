@@ -1,4 +1,4 @@
-package com.yzr.resource.layout.background.controller.vo;
+package com.yzr.resource.layout.background.controller.vo.first;
 
 public class FirstReqParam {
     private String name;
