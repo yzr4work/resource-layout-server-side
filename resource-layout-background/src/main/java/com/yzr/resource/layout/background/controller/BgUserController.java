@@ -103,6 +103,7 @@ public class BgUserController {
     }
     /**
      * 查询后台用户详细信息
+     * todo: 接口权限验证 只有管理员权限才能调用
      */
     @PostMapping("/info")
     public RespWarp<BgUserInfoRespVo> bgUserInfo(ReqParamWarp<BgUserInfoReqVo> reqParamWarp){

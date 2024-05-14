@@ -1,6 +1,8 @@
 package com.yzr.resource.layout.background.service;
 
-import com.yzr.resource.layout.background.dto.user.*;
+import com.yzr.resource.layout.background.service.dto.overall.PageParamDtoWarp;
+import com.yzr.resource.layout.background.service.dto.overall.PageReturnDtoWarp;
+import com.yzr.resource.layout.background.service.dto.user.*;
 
 public interface BgUserService {
     /**
@@ -22,5 +24,20 @@ public interface BgUserService {
     /**
      * 根据token获取后台用户
      */
-    BgUserInfoDto getBgUserByToken(String token);
+    OperatorInfoResultDto getOperatorByToken(String token);
+
+    /**
+     * 分页条件查询后台用户列表
+     * @param pageParam 分页条件
+     * @return 分页查询结果
+     */
+    PageReturnDtoWarp<BgUserInfoListResultDto> list(PageParamDtoWarp<BgUserInfoListDto> pageParam);
+
+    /**
+     * 获取后台用户信息
+     * @param userInfoDto 获取条件
+     * @return 后台用户信息
+     */
+    BgUserInfoResultDto info(BgUserInfoDto userInfoDto);
+
 }

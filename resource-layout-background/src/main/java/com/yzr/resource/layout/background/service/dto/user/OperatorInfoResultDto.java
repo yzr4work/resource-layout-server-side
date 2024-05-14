@@ -1,6 +1,6 @@
-package com.yzr.resource.layout.background.dto.user;
+package com.yzr.resource.layout.background.service.dto.user;
 
-public class BgUserInfoDto {
+public class OperatorInfoResultDto {
     private String bgUserId;
     private String bgUserName;
 

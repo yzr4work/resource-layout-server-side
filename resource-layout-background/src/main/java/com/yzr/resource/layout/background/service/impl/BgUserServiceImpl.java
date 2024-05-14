@@ -1,7 +1,9 @@
 package com.yzr.resource.layout.background.service.impl;
 
-import com.yzr.resource.layout.background.dto.user.*;
 import com.yzr.resource.layout.background.service.BgUserService;
+import com.yzr.resource.layout.background.service.dto.overall.PageParamDtoWarp;
+import com.yzr.resource.layout.background.service.dto.overall.PageReturnDtoWarp;
+import com.yzr.resource.layout.background.service.dto.user.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,7 +54,29 @@ public class BgUserServiceImpl implements BgUserService {
      * @param token
      */
     @Override
-    public BgUserInfoDto getBgUserByToken(String token) {
+    public OperatorInfoResultDto getOperatorByToken(String token) {
+        return null;
+    }
+
+    /**
+     * 分页条件查询后台用户列表
+     *
+     * @param pageParam 分页条件
+     * @return 分页查询结果
+     */
+    @Override
+    public PageReturnDtoWarp<BgUserInfoListResultDto> list(PageParamDtoWarp<BgUserInfoListDto> pageParam) {
+        return null;
+    }
+
+    /**
+     * 获取后台用户信息
+     *
+     * @param userInfoDto 获取条件
+     * @return 后台用户信息
+     */
+    @Override
+    public BgUserInfoResultDto info(BgUserInfoDto userInfoDto) {
         return null;
     }
 }
