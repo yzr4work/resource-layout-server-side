@@ -2,7 +2,12 @@
 ![license](https://img.shields.io/badge/license-Apache--2.0-green.svg)
 
 资源布局后台管理
-## 背景
+## 背景  
+### 外部服务依赖
+1. mysql:8.3.0 docker  
+   启动命令  
+2. redis:7.2.5-bookworm docker  
+   启动命令  
 ## 原理
 ## 场景  
 * 后台基础功能  

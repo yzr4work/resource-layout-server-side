@@ -1,0 +1,10 @@
+//创建mysql账户 bg_admin
+create user 'bg_admin'@'%' identified with mysql_native_password by 'bg_admin';
+//账户赋权
+grant all privileges on *.* to 'bg_admin'@'%';
+//刷新配置
+flush privileges;
+//创建数据库layout
+create database layout;
+//使用数据库layout
+use layout;

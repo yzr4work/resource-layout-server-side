@@ -14,6 +14,10 @@ repositories {
 
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
+    //mybatis 持久层框架
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2")
+    //druid 数据库连接池
+    implementation("com.alibaba:druid-spring-boot-starter:1.2.22")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
