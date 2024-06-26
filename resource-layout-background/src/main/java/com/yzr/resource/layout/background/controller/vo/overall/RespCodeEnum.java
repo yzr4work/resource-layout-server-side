@@ -9,6 +9,7 @@ public enum RespCodeEnum {
     LOGIN_FAIL(-2,"登录失败,请重试"),
     REMOTE_LOGIN(-3, "账号已异地登录,请重新登录"),
     INSUFFICIENT_PERMISSIONS(-4, "权限不足,请联系相关人员"),
+    BUSINESS_ERROR(-5, "业务异常"),
     ;
     /**
      * 状态码

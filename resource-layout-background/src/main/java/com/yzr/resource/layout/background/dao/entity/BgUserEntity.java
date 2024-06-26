@@ -1,9 +1,19 @@
-package com.yzr.resource.layout.background.service.dto.user;
+package com.yzr.resource.layout.background.dao.entity;
 
-public class CreateBgUserDto {
+public class BgUserEntity {
+    private String bgUserId;
     private String bgUserName;
     private String bgUserAccount;
     private String password;
+
+
+    public String getBgUserId() {
+        return bgUserId;
+    }
+
+    public void setBgUserId(String bgUserId) {
+        this.bgUserId = bgUserId;
+    }
 
     public String getBgUserName() {
         return bgUserName;

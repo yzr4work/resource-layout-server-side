@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应mapper接口所在的位置-->
+<mapper namespace="com.yzr.resource.layout.background.dao.mapper.BgUserMapper">
+    <!--对应mapper接口中的方法public Book queryBook(int id);-->
+    <insert id="createBgUser" parameterType="BgUserEntity" useGeneratedKeys="true" keyProperty="bgUser.bgUserId" keyColumn="bg_user_id">
+        insert into bg_user (bg_user_name, bg_user_account, password) values(#{bgUser.bgUserName},#{bgUser.bgUserAccount},#{bgUser.password} );
+    </insert>
+
+</mapper>

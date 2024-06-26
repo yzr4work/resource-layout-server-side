@@ -5,6 +5,9 @@ import com.yzr.resource.layout.background.controller.vo.overall.ReqParamWarp;
 import com.yzr.resource.layout.background.controller.vo.overall.RespPageWarp;
 import com.yzr.resource.layout.background.controller.vo.overall.RespWarp;
 import com.yzr.resource.layout.background.controller.vo.user.*;
+import com.yzr.resource.layout.background.service.BgUserService;
+import com.yzr.resource.layout.background.service.dto.user.CreateBgUserDto;
+import com.yzr.resource.layout.background.service.dto.user.CreateBgUserResultDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,12 @@ import java.util.ArrayList;
 public class BgUserController {
     private final Logger LOGGER = LoggerFactory.getLogger(FirstController.class);
 
+    private final BgUserService userService;
+
+    public BgUserController(BgUserService userService) {
+        this.userService = userService;
+    }
+
     /**
      * 后台用户创建
      * @param reqParamWarp
@@ -27,11 +36,27 @@ public class BgUserController {
     public RespWarp<BgUserCreateRespVo> bgUserCreate(ReqParamWarp<BgUserCreateReqVo> reqParamWarp){
         BgUserCreateReqVo reqVo =  reqParamWarp.getParam();
         LOGGER.info("bgUserCreate rev param : {}", reqVo.toString());
+        CreateBgUserResultDto result = userService.createBgUser(conversionReqVo2Dto(reqVo));
         BgUserCreateRespVo respVo = new BgUserCreateRespVo();
-        respVo.setResult(true);
         respVo.setBgUserName(reqVo.getBgUserName());
         respVo.setBgUserAccount(reqVo.getBgUserAccount());
-        return RespWarp.SUCCESS(respVo);
+        if (result.getResultType() == 1){
+            respVo.setResult(true);
+            return RespWarp.SUCCESS(respVo);
+        }else {
+            respVo.setResult(false);
+            return RespWarp.BUSINESS_ERROR(respVo,result.getDesc());
+        }
+
+
+    }
+    //创建用户请求vo对象转换到dto对象
+    private CreateBgUserDto conversionReqVo2Dto(BgUserCreateReqVo reqVo){
+        CreateBgUserDto dto = new CreateBgUserDto();
+        dto.setBgUserName(reqVo.getBgUserName());
+        dto.setBgUserAccount(reqVo.getBgUserAccount());
+        dto.setPassword(reqVo.getPassword());
+        return dto;
     }
 
     /**

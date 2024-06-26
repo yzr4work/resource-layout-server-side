@@ -45,10 +45,33 @@ public class RespWarp<T> {
         this.data = data;
     }
 
+    public RespWarp() {
+    }
+
     public static <T> RespWarp<T> SUCCESS(T data){
         RespWarp<T> warp = new RespWarp<T>(data);
         warp.setCode(RespCodeEnum.SUCCESS.getCode());
         warp.setMessage(RespCodeEnum.SUCCESS.getDesc());
         return warp;
     }
+    public static <T> RespWarp<T> BUSINESS_ERROR(T data,String desc){
+        RespWarp<T> warp = new RespWarp<T>(data);
+        warp.setCode(RespCodeEnum.BUSINESS_ERROR.getCode());
+        warp.setMessage(desc);
+        return warp;
+    }
+
+    public static <T> RespWarp<T> BUSINESS_ERROR(T data){
+        RespWarp<T> warp = new RespWarp<T>(data);
+        warp.setCode(RespCodeEnum.BUSINESS_ERROR.getCode());
+        warp.setMessage(RespCodeEnum.BUSINESS_ERROR.getDesc());
+        return warp;
+    }
+    public static  RespWarp BUSINESS_ERROR(){
+        RespWarp warp = new RespWarp();
+        warp.setCode(RespCodeEnum.BUSINESS_ERROR.getCode());
+        warp.setMessage(RespCodeEnum.BUSINESS_ERROR.getDesc());
+        return warp;
+    }
+
 }

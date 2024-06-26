@@ -2,6 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       url: jdbc:mysql://localhost:3308/layout
       username: bg_admin
@@ -21,3 +22,8 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
       max-evictable-idle-time-millis: 600000
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.yzr.resource.layout.background.dao.entity
+  configuration:
+    map-underscore-to-camel-case: true
