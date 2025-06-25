@@ -21,4 +21,22 @@ public class CreateBgUserResultDto {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public CreateBgUserResultDto() {
+    }
+
+    public CreateBgUserResultDto(int resultType, String desc) {
+        this.resultType = resultType;
+        this.desc = desc;
+    }
+
+    public static CreateBgUserResultDto createSuccess(){
+        CreateBgUserResultDto resultDto = new CreateBgUserResultDto();
+        resultDto.setResultType(1);
+        return resultDto;
+    }
+
+    public static CreateBgUserResultDto createFail(){
+        return new CreateBgUserResultDto(2,"创建失败,账号重复");
+    }
 }

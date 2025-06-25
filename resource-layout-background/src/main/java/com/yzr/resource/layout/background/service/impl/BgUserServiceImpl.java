@@ -1,5 +1,8 @@
 package com.yzr.resource.layout.background.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.yzr.resource.layout.background.dao.BgUserArea;
+import com.yzr.resource.layout.background.dao.entity.BgUserEntity;
 import com.yzr.resource.layout.background.service.BgUserService;
 import com.yzr.resource.layout.background.service.dto.overall.PageParamDtoWarp;
 import com.yzr.resource.layout.background.service.dto.overall.PageReturnDtoWarp;
@@ -8,6 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BgUserServiceImpl implements BgUserService {
+
+    private final BgUserArea bgUserArea;
+
+    public BgUserServiceImpl(BgUserArea bgUserArea) {
+        this.bgUserArea = bgUserArea;
+    }
+
     /**
      * 创建后台用户
      *
@@ -15,7 +25,18 @@ public class BgUserServiceImpl implements BgUserService {
      */
     @Override
     public CreateBgUserResultDto createBgUser(CreateBgUserDto createBgUserDto) {
-        return null;
+        BgUserEntity bgUserEntity = new BgUserEntity();
+        bgUserEntity.setBgUserAccount(createBgUserDto.getBgUserAccount());
+        bgUserEntity.setBgUserName(createBgUserDto.getBgUserName());
+        bgUserEntity.setPassword(createBgUserDto.getPassword());
+        if (StringUtils.isEmpty(bgUserArea.createBgUser(bgUserEntity)) ){
+
+            return CreateBgUserResultDto.createFail();
+        }else {
+
+            return CreateBgUserResultDto.createSuccess();
+        }
+
     }
 
     /**
@@ -25,6 +46,10 @@ public class BgUserServiceImpl implements BgUserService {
      */
     @Override
     public DeleteBgUserResultDto deleteBgUser(DeleteBgUserDto deleteBgUserDto) {
+        BgUserEntity bgUser = new BgUserEntity();
+        bgUser.setBgUserId(deleteBgUserDto.getBgUserId());
+        bgUser.setBgUserAccount(deleteBgUserDto.getBgUserAccount());
+
         return null;
     }
 

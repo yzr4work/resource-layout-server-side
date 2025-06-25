@@ -41,9 +41,11 @@ public class BgUserController {
         respVo.setBgUserName(reqVo.getBgUserName());
         respVo.setBgUserAccount(reqVo.getBgUserAccount());
         if (result.getResultType() == 1){
+            //记录操作成功记录
             respVo.setResult(true);
             return RespWarp.SUCCESS(respVo);
         }else {
+            //记录操作失败记录
             respVo.setResult(false);
             return RespWarp.BUSINESS_ERROR(respVo,result.getDesc());
         }

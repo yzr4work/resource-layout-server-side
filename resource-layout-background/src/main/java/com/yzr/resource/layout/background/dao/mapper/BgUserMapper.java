@@ -1,11 +1,12 @@
 package com.yzr.resource.layout.background.dao.mapper;
 
 import com.yzr.resource.layout.background.dao.entity.BgUserEntity;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface BgUserMapper {
 
     Integer createBgUser(BgUserEntity bgUser);
 
+    Integer deleteBgUser(BgUserEntity bgUser);
 }
