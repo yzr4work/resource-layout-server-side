@@ -3,7 +3,9 @@ package com.yzr.resource.layout.background.dao.areaImpl;
 import com.yzr.resource.layout.background.dao.BgUserArea;
 import com.yzr.resource.layout.background.dao.entity.BgUserEntity;
 import com.yzr.resource.layout.background.dao.mapper.BgUserMapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class BgUserAreaImpl implements BgUserArea {
 
     private final BgUserMapper bgUserMapper;

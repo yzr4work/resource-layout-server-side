@@ -1,9 +1,24 @@
 package com.yzr.resource.layout.background.dao.entity;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("BgUserEntity")
 public class BgUserEntity {
+    /**
+     * 后台用户Id
+     */
     private String bgUserId;
+    /**
+     * 后台用户名称
+     */
     private String bgUserName;
+    /**
+     * 后台用户账号
+     */
     private String bgUserAccount;
+    /**
+     * 后台用户密码
+     */
     private String password;
 
 

@@ -23,7 +23,10 @@ spring:
       min-evictable-idle-time-millis: 300000
       max-evictable-idle-time-millis: 600000
 mybatis:
+  #标注mapper文件位置
   mapper-locations: classpath:mybatis/mapper/*.xml
+  #类型扫描包 可简化mapper.xml中类型的书写
   type-aliases-package: com.yzr.resource.layout.background.dao.entity
   configuration:
+    #字段驼峰自动映射开启
     map-underscore-to-camel-case: true

@@ -3,32 +3,33 @@ package com.yzr.resource.layout.background.service.dto.overall;
 import java.util.List;
 
 public class PageReturnDtoWarp<T> {
-    private Long currentPage;
-    private int pageSize;
-    private Long count;
+    private Integer currentPage;
+    private Integer pageSize;
+    private Integer count;
     private List<T> list;
 
-    public Long getCurrentPage() {
-        return currentPage;
-    }
 
-    public void setCurrentPage(Long currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public Long getCount() {
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(Long count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 

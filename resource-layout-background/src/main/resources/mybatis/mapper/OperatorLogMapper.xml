@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应mapper接口所在的位置-->
+<mapper namespace="com.yzr.resource.layout.background.dao.mapper.OperatorLogMapper">
+    
+    <insert id="insertOperatorLog" parameterType="OperatorLogEntity"
+            useGeneratedKeys="true" keyProperty="bgUser.bgUserId" keyColumn="bg_user_id">
+        insert into bg_operator_log (bg_user_id, bg_user_account, log_type, param, result) values
+            (#{bgUserId},#{bgUserAccount},#{logType},#{param},#{result} );
+    </insert>
+
+
+    <select id="selectOperatorLog" parameterType="OperatorLogSelectEntity"
+            resultType="OperatorLogEntity">
+        select log_id, bg_user_id , bg_user_account , log_type  ,param , result, create_time from bg_operator_log
+        <where>
+            <if test="beginLogId != null">
+                and log_id <![CDATA[ < ]]> #{beginLogId}
+            </if>
+            <if test="bg_user_id != null">
+                and bg_user_id = #{bgUserId}
+            </if>
+            <if test="bgUserAccount != null">
+                and bg_user_account = #{bgUserAccount}
+            </if>
+            <if test="logType != null">
+                and log_type = #{logType}
+            </if>
+            <if test="beginTime != null">
+                and create_time <![CDATA[ > ]]> #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and create_time <![CDATA[ < ]]> #{endTime}
+            </if>
+        </where>
+        order by log_id desc limit #{count};
+    </select>
+
+    <select id="selectOperatorLogCount" parameterType="OperatorLogSelectEntity"
+            resultType="int">
+        select count(1) from bg_operator_log
+        <where>
+            <if test="bg_user_id != null">
+                and bg_user_id = #{bgUserId}
+            </if>
+            <if test="bgUserAccount != null">
+                and bg_user_account = #{bgUserAccount}
+            </if>
+            <if test="logType != null">
+                and log_type = #{logType}
+            </if>
+            <if test="beginTime != null">
+                and create_time <![CDATA[ > ]]> #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and create_time <![CDATA[ < ]]> #{endTime}
+            </if>
+        </where>
+        order by log_id desc;
+    </select>
+
+</mapper>

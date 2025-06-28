@@ -4,24 +4,24 @@ package com.yzr.resource.layout.background.controller.vo.overall;
  * 后台操作用户信息
  */
 public class BgOperationUser {
-    private String bgUid;
-    private String userName;
+    private String bgUserId;
+    private String bgUserAccount;
     private String operationTime;
 
-    public String getBgUid() {
-        return bgUid;
+    public String getBgUserId() {
+        return bgUserId;
     }
 
-    public void setBgUid(String bgUid) {
-        this.bgUid = bgUid;
+    public void setBgUserId(String bgUserId) {
+        this.bgUserId = bgUserId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getBgUserAccount() {
+        return bgUserAccount;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setBgUserAccount(String bgUserAccount) {
+        this.bgUserAccount = bgUserAccount;
     }
 
     public String getOperationTime() {
@@ -35,8 +35,8 @@ public class BgOperationUser {
     @Override
     public String toString() {
         return "BgOperationUser{" +
-                "bgUid='" + bgUid + '\'' +
-                ", userName='" + userName + '\'' +
+                "bgUserId='" + bgUserId + '\'' +
+                ", bgUserAccount='" + bgUserAccount + '\'' +
                 ", operationTime='" + operationTime + '\'' +
                 '}';
     }

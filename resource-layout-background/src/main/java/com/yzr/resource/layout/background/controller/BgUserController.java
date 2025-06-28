@@ -1,11 +1,10 @@
 package com.yzr.resource.layout.background.controller;
 
-import com.yzr.resource.layout.background.controller.vo.overall.ReqPageWarp;
-import com.yzr.resource.layout.background.controller.vo.overall.ReqParamWarp;
-import com.yzr.resource.layout.background.controller.vo.overall.RespPageWarp;
-import com.yzr.resource.layout.background.controller.vo.overall.RespWarp;
+import com.yzr.resource.layout.background.controller.vo.overall.*;
 import com.yzr.resource.layout.background.controller.vo.user.*;
 import com.yzr.resource.layout.background.service.BgUserService;
+import com.yzr.resource.layout.background.service.OperatorLogService;
+import com.yzr.resource.layout.background.service.dto.operatorLog.CreateOperatorLogDto;
 import com.yzr.resource.layout.background.service.dto.user.CreateBgUserDto;
 import com.yzr.resource.layout.background.service.dto.user.CreateBgUserResultDto;
 import org.slf4j.Logger;
@@ -22,9 +21,11 @@ public class BgUserController {
     private final Logger LOGGER = LoggerFactory.getLogger(FirstController.class);
 
     private final BgUserService userService;
+    private final OperatorLogService logService;
 
-    public BgUserController(BgUserService userService) {
+    public BgUserController(BgUserService userService, OperatorLogService logService) {
         this.userService = userService;
+        this.logService = logService;
     }
 
     /**
@@ -40,18 +41,20 @@ public class BgUserController {
         BgUserCreateRespVo respVo = new BgUserCreateRespVo();
         respVo.setBgUserName(reqVo.getBgUserName());
         respVo.setBgUserAccount(reqVo.getBgUserAccount());
+        addOperatorLog(reqParamWarp, OperatorLogTypeEnum.CREATE_BG_USER, result.getResultType());
         if (result.getResultType() == 1){
-            //记录操作成功记录
             respVo.setResult(true);
             return RespWarp.SUCCESS(respVo);
         }else {
-            //记录操作失败记录
             respVo.setResult(false);
             return RespWarp.BUSINESS_ERROR(respVo,result.getDesc());
         }
 
 
     }
+
+
+
     //创建用户请求vo对象转换到dto对象
     private CreateBgUserDto conversionReqVo2Dto(BgUserCreateReqVo reqVo){
         CreateBgUserDto dto = new CreateBgUserDto();
@@ -72,6 +75,7 @@ public class BgUserController {
         LOGGER.info("bgUserDelete rec param : {}",reqVo.toString());
         BgUserDeleteRespVo respVo = new BgUserDeleteRespVo();
         respVo.setResult(true);
+        addOperatorLog(reqParamWarp, OperatorLogTypeEnum.DEL_BG_USER, 1);
         return RespWarp.SUCCESS(respVo);
     }
 
@@ -142,5 +146,22 @@ public class BgUserController {
         respVo.setBgUserAccount("1");
         respVo.setPassword("123456");
         return RespWarp.SUCCESS(respVo);
+    }
+
+    /**
+     * 记录操作日志
+     * @param reqParamWarp 请求对象
+     * @param logType 日志类型
+     * @param resultTypeCode 操作结果状态码
+     */
+    private void addOperatorLog(ReqParamWarp reqParamWarp, OperatorLogTypeEnum logType, Integer resultTypeCode) {
+        CreateOperatorLogDto logDto = new CreateOperatorLogDto();
+        logDto.setLogType(logType.getCode());
+        logDto.setParam(reqParamWarp.getParam().toString());
+        logDto.setBgUserId(reqParamWarp.getBgOperationUser().getBgUserId());
+        logDto.setBgUserAccount(reqParamWarp.getBgOperationUser().getBgUserAccount());
+        logDto.setResult(resultTypeCode);
+        //记录操作日志
+        logService.addOperatorLog(logDto);
     }
 }

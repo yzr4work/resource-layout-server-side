@@ -20,3 +20,17 @@ CREATE TABLE `bg_user` (
     UNIQUE KEY `uiq_account` (`bg_user_account`),
     KEY `id_name` (`bg_user_name`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+//创建后台操作记录表
+CREATE TABLE `bg_operator_log` (
+    `log_id` bigint NOT NULL AUTO_INCREMENT,
+    `bg_user_id` bigint NOT NULL,
+    `bg_user_account` varchar(20) NOT NULL,
+    `log_type` int(5) NOT NULL,
+    `param` varchar(200) NOT NULL,
+    `result` int(5) NOT NULL,
+    `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+    `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`log_id`),
+    KEY `user_id_account_log_type` (`bg_user_id`,`bg_user_account`,`log_type`),
+    KEY `log_type` (`log_type`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;

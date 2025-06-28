@@ -5,12 +5,13 @@
 <!--namespace对应mapper接口所在的位置-->
 <mapper namespace="com.yzr.resource.layout.background.dao.mapper.BgUserMapper">
     <!--对应mapper接口中的方法public Book queryBook(int id);-->
-    <insert id="createBgUser" parameterType="com.yzr.resource.layout.background.dao.entity.BgUserEntity"
+    <insert id="createBgUser" parameterType="BgUserEntity"
             useGeneratedKeys="true" keyProperty="bgUser.bgUserId" keyColumn="bg_user_id">
-        insert into bg_user (bg_user_name, bg_user_account, password) values(#{bgUser.bgUserName},#{bgUser.bgUserAccount},#{bgUser.password} );
+        insert into bg_user (bg_user_name, bg_user_account, password) values
+        ( #{bgUserName},#{bgUserAccount},#{password} );
     </insert>
-    <delete id="deleteBgUser" parameterType="com.yzr.resource.layout.background.dao.entity.BgUserEntity" >
-        delete from bg_user where bg_user_id = #{bgUser.bgUserId} and bg_user_account = #{bgUser.bgUserAccount} limit 1;
+    <delete id="deleteBgUser" parameterType="BgUserEntity" >
+        delete from bg_user where bg_user_id = #{bgUserId} and bg_user_account = #{bgUserAccount} limit 1;
     </delete>
 
 </mapper>

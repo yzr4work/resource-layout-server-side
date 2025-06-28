@@ -1,23 +1,20 @@
-package com.yzr.resource.layout.background.dao.entity;
-
-import org.apache.ibatis.type.Alias;
+package com.yzr.resource.layout.background.service.dto.operatorLog;
 
 import java.time.LocalDateTime;
 
-@Alias("OperatorLogEntity")
-public class OperatorLogEntity {
+public class OperatorLogInfoListResultDto {
     /**
-     * 操作记录id
+     * 操作记录Id
      */
     private Long logId;
-    /***
-     * 操作人id
+    /**
+     * 操作人Id
      */
     private String bgUserId;
     /**
      * 操作人账号
      */
-    private String BgUserAccount;
+    private String bgUserAccount;
     /**
      * 操作类型 1 创建后台账号 2 删除后台账号
      */
@@ -52,11 +49,11 @@ public class OperatorLogEntity {
     }
 
     public String getBgUserAccount() {
-        return BgUserAccount;
+        return bgUserAccount;
     }
 
     public void setBgUserAccount(String bgUserAccount) {
-        BgUserAccount = bgUserAccount;
+        this.bgUserAccount = bgUserAccount;
     }
 
     public Integer getLogType() {
