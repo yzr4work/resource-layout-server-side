@@ -7,6 +7,8 @@ import com.yzr.resource.layout.background.service.OperatorLogService;
 import com.yzr.resource.layout.background.service.dto.operatorLog.CreateOperatorLogDto;
 import com.yzr.resource.layout.background.service.dto.user.CreateBgUserDto;
 import com.yzr.resource.layout.background.service.dto.user.CreateBgUserResultDto;
+import com.yzr.resource.layout.background.service.dto.user.DeleteBgUserDto;
+import com.yzr.resource.layout.background.service.dto.user.DeleteBgUserResultDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/bg/user")
 public class BgUserController {
-    private final Logger LOGGER = LoggerFactory.getLogger(FirstController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(BgUserController.class);
 
     private final BgUserService userService;
     private final OperatorLogService logService;
@@ -53,19 +55,8 @@ public class BgUserController {
 
     }
 
-
-
-    //创建用户请求vo对象转换到dto对象
-    private CreateBgUserDto conversionReqVo2Dto(BgUserCreateReqVo reqVo){
-        CreateBgUserDto dto = new CreateBgUserDto();
-        dto.setBgUserName(reqVo.getBgUserName());
-        dto.setBgUserAccount(reqVo.getBgUserAccount());
-        dto.setPassword(reqVo.getPassword());
-        return dto;
-    }
-
     /**
-     * 后台用户注销
+     * 删除后台用户
      * @param reqParamWarp
      * @return
      */
@@ -74,8 +65,12 @@ public class BgUserController {
         BgUserDeleteReqVo reqVo = reqParamWarp.getParam();
         LOGGER.info("bgUserDelete rec param : {}",reqVo.toString());
         BgUserDeleteRespVo respVo = new BgUserDeleteRespVo();
-        respVo.setResult(true);
-        addOperatorLog(reqParamWarp, OperatorLogTypeEnum.DEL_BG_USER, 1);
+        DeleteBgUserDto deleteBgUserDto = new DeleteBgUserDto();
+        deleteBgUserDto.setBgUserId(reqVo.getBgUserId());
+        deleteBgUserDto.setBgUserAccount(reqVo.getBgUserAccount());
+        DeleteBgUserResultDto delResult = userService.deleteBgUser(deleteBgUserDto);
+        respVo.setResult(delResult.getResult());
+        addOperatorLog(reqParamWarp, OperatorLogTypeEnum.DEL_BG_USER, delResult.getResult() ? 1 : 2);
         return RespWarp.SUCCESS(respVo);
     }
 
@@ -146,6 +141,15 @@ public class BgUserController {
         respVo.setBgUserAccount("1");
         respVo.setPassword("123456");
         return RespWarp.SUCCESS(respVo);
+    }
+
+    //创建用户请求vo对象转换到dto对象
+    private CreateBgUserDto conversionReqVo2Dto(BgUserCreateReqVo reqVo){
+        CreateBgUserDto dto = new CreateBgUserDto();
+        dto.setBgUserName(reqVo.getBgUserName());
+        dto.setBgUserAccount(reqVo.getBgUserAccount());
+        dto.setPassword(reqVo.getPassword());
+        return dto;
     }
 
     /**

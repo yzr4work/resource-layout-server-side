@@ -1,5 +1,8 @@
 package com.yzr.resource.layout.background.service.dto.user;
 
+/**
+ * 创建后台用户结果
+ */
 public class CreateBgUserResultDto {
     // 1 创建成功 2 创建失败,账号重复
     private int resultType;

@@ -1,7 +1,16 @@
 package com.yzr.resource.layout.background.service.dto.user;
 
+/**
+ * 删除后台用户参数
+ */
 public class DeleteBgUserDto {
+    /**
+     * 后台用户Id
+     */
     private String bgUserId;
+    /**
+     * 后台用户账号
+     */
     private String bgUserAccount;
 
     public String getBgUserId() {

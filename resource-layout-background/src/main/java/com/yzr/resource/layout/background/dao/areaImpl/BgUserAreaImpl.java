@@ -24,4 +24,20 @@ public class BgUserAreaImpl implements BgUserArea {
         bgUserMapper.createBgUser(bgUser);
         return bgUser.getBgUserId();
     }
+
+    /**
+     * 删除后台用户
+     *
+     * @param bgUser 后台用户数据对象
+     * @return 是否删除成功
+     */
+    @Override
+    public Boolean deleteBgUser(BgUserEntity bgUser) {
+        Integer effectNum = bgUserMapper.deleteBgUser(bgUser);
+        if (effectNum != null && effectNum == 1){
+            //删除相关缓存
+            return true;
+        }
+        return false;
+    }
 }

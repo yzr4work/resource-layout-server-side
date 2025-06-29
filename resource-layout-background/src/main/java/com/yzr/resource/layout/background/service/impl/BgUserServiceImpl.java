@@ -49,8 +49,8 @@ public class BgUserServiceImpl implements BgUserService {
         BgUserEntity bgUser = new BgUserEntity();
         bgUser.setBgUserId(deleteBgUserDto.getBgUserId());
         bgUser.setBgUserAccount(deleteBgUserDto.getBgUserAccount());
+        return new DeleteBgUserResultDto( bgUserArea.deleteBgUser(bgUser));
 
-        return null;
     }
 
     /**

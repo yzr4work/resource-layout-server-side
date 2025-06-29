@@ -1,8 +1,17 @@
 package com.yzr.resource.layout.background.controller.vo.user;
 
+/**
+ * 删除后台用户请求参数
+ */
 public class BgUserDeleteReqVo {
-    private String bgUserAccount;
+    /**
+     * 后台用户Id
+     */
     private String bgUserId;
+    /**
+     * 后台用户账号
+     */
+    private String bgUserAccount;
 
     public String getBgUserAccount() {
         return bgUserAccount;

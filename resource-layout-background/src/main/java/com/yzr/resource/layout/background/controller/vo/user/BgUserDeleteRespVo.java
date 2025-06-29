@@ -1,13 +1,13 @@
 package com.yzr.resource.layout.background.controller.vo.user;
 
 public class BgUserDeleteRespVo {
-    private boolean result;
+    private Boolean result;
 
-    public boolean isResult() {
+    public Boolean isResult() {
         return result;
     }
 
-    public void setResult(boolean result) {
+    public void setResult(Boolean result) {
         this.result = result;
     }
 
