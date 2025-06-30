@@ -1,19 +1,39 @@
-plugins {
-    id 'java'
+//构建脚本需要再plugin 之前
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.7.18'
+    }
 }
+
+apply plugin: 'java'
+
 
 group = 'com.yzr'
 version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
+//子项目继承的gradle依赖
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+    apply plugin: 'java'
+    apply plugin: "java-library"
+    apply plugin: 'org.springframework.boot'
+    //应用 spring 依赖管理 依赖不用显示指定版本号
+    apply plugin: 'io.spring.dependency-management'
 
-test {
-    useJUnitPlatform()
+    dependencies {
+        implementation "org.springframework.boot:spring-boot-starter"
+        testImplementation platform("org.junit:junit-bom:5.10.0")
+        testImplementation "org.junit.jupiter:junit-jupiter"
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+    test {
+        useJUnitPlatform()
+    }
+
 }

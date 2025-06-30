@@ -1,4 +1,4 @@
-package com.yzr.resource.layout.background.service.dto.overall;
+package com.yzr.resource.laout.background.service.dto.overall;
 
 import java.util.List;
 

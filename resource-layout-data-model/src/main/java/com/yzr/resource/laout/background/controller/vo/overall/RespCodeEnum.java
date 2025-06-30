@@ -1,4 +1,4 @@
-package com.yzr.resource.layout.background.controller.vo.overall;
+package com.yzr.resource.laout.background.controller.vo.overall;
 
 /**
  * 响应状态码枚举

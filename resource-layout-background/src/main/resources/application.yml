@@ -22,6 +22,18 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
       max-evictable-idle-time-millis: 600000
+  redis:
+    host: 127.0.0.1      # Redis服务器地址
+    port: 6379           # 端口
+    password:            # 密码（无密码则留空）
+    database: 0          # 数据库索引
+    lettuce:
+      pool:
+        max-active: 8   # 最大连接数
+        max-idle: 8      # 最大空闲连接
+        min-idle: 1      # 最小空闲连接
+        max-wait: 100ms  # 连接等待时间
+    timeout: 5000ms
 mybatis:
   #标注mapper文件位置
   mapper-locations: classpath:mybatis/mapper/*.xml
@@ -30,3 +42,4 @@ mybatis:
   configuration:
     #字段驼峰自动映射开启
     map-underscore-to-camel-case: true
+secretKey: 'layoutBackground' #token 加密秘钥

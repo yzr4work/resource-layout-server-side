@@ -1,4 +1,4 @@
-package com.yzr.resource.layout.background.service.dto.overall;
+package com.yzr.resource.laout.background.service.dto.overall;
 
 public class PageParamDtoWarp<T> {
     private Long lastId;

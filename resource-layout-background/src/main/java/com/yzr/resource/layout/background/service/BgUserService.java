@@ -1,7 +1,7 @@
 package com.yzr.resource.layout.background.service;
 
-import com.yzr.resource.layout.background.service.dto.overall.PageParamDtoWarp;
-import com.yzr.resource.layout.background.service.dto.overall.PageReturnDtoWarp;
+import com.yzr.resource.laout.background.service.dto.overall.PageParamDtoWarp;
+import com.yzr.resource.laout.background.service.dto.overall.PageReturnDtoWarp;
 import com.yzr.resource.layout.background.service.dto.user.*;
 
 public interface BgUserService {

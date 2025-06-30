@@ -1,4 +1,4 @@
-package com.yzr.resource.layout.background.controller.vo.overall;
+package com.yzr.resource.layout.background.controller.vo.operator;
 
 import java.util.Arrays;
 import java.util.List;
