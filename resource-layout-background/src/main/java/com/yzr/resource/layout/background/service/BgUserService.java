@@ -16,7 +16,7 @@ public interface BgUserService {
     /**
      * 后台用户登录
      */
-    LoginResultDto login(LoginDto loginDto);
+    LoginResultDto login(LoginDto loginDto) throws Exception;
     /**
      * 后台用户登出
      */

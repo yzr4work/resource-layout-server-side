@@ -43,3 +43,6 @@ mybatis:
     #字段驼峰自动映射开启
     map-underscore-to-camel-case: true
 secretKey: 'layoutBackground' #token 加密秘钥
+password:
+  sk: 'bgUserPasswordSK'
+  iv: -55,-6,-80,0,15,-92,-30,-43,-114,108,-80,-119,72,-39,-20,37

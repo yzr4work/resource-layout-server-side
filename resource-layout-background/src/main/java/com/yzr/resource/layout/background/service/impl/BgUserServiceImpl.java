@@ -7,12 +7,17 @@ import com.yzr.resource.layout.background.dao.BgUserArea;
 import com.yzr.resource.layout.background.dao.entity.BgUserEntity;
 import com.yzr.resource.layout.background.service.BgUserService;
 import com.yzr.resource.layout.background.service.dto.user.*;
+import com.yzr.resource.layout.tool.BgUserTokenRuleTool;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BgUserServiceImpl implements BgUserService {
 
     private final BgUserArea bgUserArea;
+
+    @Value("secretKey")
+    private String secretKey;
 
     public BgUserServiceImpl(BgUserArea bgUserArea) {
         this.bgUserArea = bgUserArea;
@@ -59,8 +64,22 @@ public class BgUserServiceImpl implements BgUserService {
      * @param loginDto
      */
     @Override
-    public LoginResultDto login(LoginDto loginDto) {
-        return null;
+    public LoginResultDto login(LoginDto loginDto) throws Exception {
+        BgUserEntity bgUser = new BgUserEntity();
+        bgUser.setBgUserAccount(loginDto.getBgUserAccount());
+        bgUser.setPassword(loginDto.getPassword());
+        BgUserEntity userInfo = bgUserArea.findBgUser(bgUser);
+        if (userInfo == null){
+            return null;
+        }
+        //创建token
+        String token = BgUserTokenRuleTool.GENERATE_BG_USER_TOKEN(userInfo.getBgUserId(), userInfo.getBgUserAccount(), secretKey);
+        //缓存token
+        bgUserArea.cacheTokenBgUser(token, userInfo);
+        LoginResultDto loginResultDto = new LoginResultDto();
+        loginResultDto.setToken(token);
+        loginResultDto.setBgUserName(userInfo.getBgUserName());
+        return loginResultDto;
     }
 
     /**

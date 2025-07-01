@@ -1,20 +1,17 @@
 package com.yzr.resource.layout.background.controller;
 
-import com.yzr.resource.laout.background.controller.vo.overall.ReqPageWarp;
-import com.yzr.resource.laout.background.controller.vo.overall.ReqParamWarp;
-import com.yzr.resource.laout.background.controller.vo.overall.RespPageWarp;
-import com.yzr.resource.laout.background.controller.vo.overall.RespWarp;
+import com.alibaba.fastjson2.JSON;
+import com.yzr.resource.laout.background.controller.vo.overall.*;
 import com.yzr.resource.layout.background.controller.vo.operator.OperatorLogTypeEnum;
 import com.yzr.resource.layout.background.controller.vo.user.*;
 import com.yzr.resource.layout.background.service.BgUserService;
 import com.yzr.resource.layout.background.service.OperatorLogService;
 import com.yzr.resource.layout.background.service.dto.operatorLog.CreateOperatorLogDto;
-import com.yzr.resource.layout.background.service.dto.user.CreateBgUserDto;
-import com.yzr.resource.layout.background.service.dto.user.CreateBgUserResultDto;
-import com.yzr.resource.layout.background.service.dto.user.DeleteBgUserDto;
-import com.yzr.resource.layout.background.service.dto.user.DeleteBgUserResultDto;
+import com.yzr.resource.layout.background.service.dto.user.*;
+import com.yzr.resource.layout.tool.AESEncryptionTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +25,10 @@ public class BgUserController {
 
     private final BgUserService userService;
     private final OperatorLogService logService;
+    @Value("password.sk")
+    private String secretKey;
+    @Value("password.iv")
+    private byte[] iv;
 
     public BgUserController(BgUserService userService, OperatorLogService logService) {
         this.userService = userService;
@@ -42,9 +43,16 @@ public class BgUserController {
     @PostMapping("/create")
     public RespWarp<BgUserCreateRespVo> bgUserCreate(ReqParamWarp<BgUserCreateReqVo> reqParamWarp){
         BgUserCreateReqVo reqVo =  reqParamWarp.getParam();
-        LOGGER.info("bgUserCreate rev param : {}", reqVo.toString());
-        CreateBgUserResultDto result = userService.createBgUser(conversionReqVo2Dto(reqVo));
         BgUserCreateRespVo respVo = new BgUserCreateRespVo();
+        try {
+            //密码加密
+            reqVo.setPassword(AESEncryptionTool.encrypt(reqVo.getPassword(), secretKey, iv));
+        } catch (Exception e) {
+            LOGGER.error("bgUserCreate encrypt error");
+            return RespWarp.ERROR_FROM_CODE_ENUM(RespCodeEnum.SYSTEM_ERROR);
+        }
+        LOGGER.info("bgUserCreate rev param : {}", JSON.toJSONString(reqVo));
+        CreateBgUserResultDto result = userService.createBgUser(conversionCreateReqVo2Dto(reqVo));
         respVo.setBgUserName(reqVo.getBgUserName());
         respVo.setBgUserAccount(reqVo.getBgUserAccount());
         addOperatorLog(reqParamWarp, OperatorLogTypeEnum.CREATE_BG_USER, result.getResultType());
@@ -67,7 +75,7 @@ public class BgUserController {
     @PostMapping("/delete")
     public RespWarp<BgUserDeleteRespVo> bgUserDelete(ReqParamWarp<BgUserDeleteReqVo> reqParamWarp){
         BgUserDeleteReqVo reqVo = reqParamWarp.getParam();
-        LOGGER.info("bgUserDelete rec param : {}",reqVo.toString());
+        LOGGER.info("bgUserDelete rec param : {}",JSON.toJSONString(reqVo));
         BgUserDeleteRespVo respVo = new BgUserDeleteRespVo();
         DeleteBgUserDto deleteBgUserDto = new DeleteBgUserDto();
         deleteBgUserDto.setBgUserId(reqVo.getBgUserId());
@@ -86,10 +94,23 @@ public class BgUserController {
     @PostMapping("/login")
     public RespWarp<BgUserLoginRespVo> bgUserLogin(ReqParamWarp<BgUserLoginReqVo> reqParamWarp){
         BgUserLoginReqVo reqVo = reqParamWarp.getParam();
-        LOGGER.info("bgUserLogin rec param : {}",reqVo.toString());
+        LoginResultDto loginResultDto;
+        //密码加密
+        try {
+            reqVo.setPassword(AESEncryptionTool.encrypt(reqVo.getPassword(), secretKey, iv));
+
+            LOGGER.info("bgUserLogin rec param : {}", JSON.toJSONString(reqVo));
+            loginResultDto = userService.login(conversionLoginReqVo2Dto(reqVo));
+        }catch (Exception e){
+            LOGGER.error("bgUserLogin encrypt error ");
+            return RespWarp.ERROR_FROM_CODE_ENUM(RespCodeEnum.SYSTEM_ERROR);
+        }
+        if (loginResultDto == null){
+            return RespWarp.ERROR_FROM_CODE_ENUM(RespCodeEnum.LOGIN_FAIL);
+        }
         BgUserLoginRespVo respVo = new BgUserLoginRespVo();
-        respVo.setBgUserToken("uyjbe");
-        respVo.setBgUserId("54548");
+        respVo.setBgUserToken(loginResultDto.getToken());
+        respVo.setBgUserName(loginResultDto.getBgUserName());
         return RespWarp.SUCCESS(respVo);
     }
 
@@ -101,7 +122,7 @@ public class BgUserController {
     @PostMapping("/signOut")
     public RespWarp<BgUserSignOutRespVo> bgUserSignOut(ReqParamWarp<BgUserSignOutReqVo> reqParamWarp){
         BgUserSignOutReqVo reqVo = reqParamWarp.getParam();
-        LOGGER.info("bgUserSignOut rec param : {}",reqVo.toString());
+        LOGGER.info("bgUserSignOut rec param : {}",JSON.toJSONString(reqVo));
         BgUserSignOutRespVo respVo = new BgUserSignOutRespVo();
         respVo.setResult(true);
         return RespWarp.SUCCESS(respVo);
@@ -113,7 +134,7 @@ public class BgUserController {
     @PostMapping("/list")
     public RespWarp<RespPageWarp<BgUserListRespVo>> bgUserList(ReqParamWarp<ReqPageWarp<BgUserListReqVo>> reqParamWarp){
         ReqPageWarp<BgUserListReqVo> reqVo = reqParamWarp.getParam();
-        LOGGER.info("bgUserList rec param : {}",reqVo.toString());
+        LOGGER.info("bgUserList rec param : {}",JSON.toJSONString(reqVo));
         RespPageWarp<BgUserListRespVo> resp = new RespPageWarp<>();
         ArrayList<BgUserListRespVo> bgUserList = new ArrayList<>();
         bgUserList.add(new BgUserListRespVo("1","1","1"));
@@ -131,6 +152,7 @@ public class BgUserController {
         resp.setPageSize(10);
         return RespWarp.SUCCESS(resp);
     }
+
     /**
      * 查询后台用户详细信息
      * todo: 接口权限验证 只有管理员权限才能调用
@@ -138,7 +160,7 @@ public class BgUserController {
     @PostMapping("/info")
     public RespWarp<BgUserInfoRespVo> bgUserInfo(ReqParamWarp<BgUserInfoReqVo> reqParamWarp){
         BgUserInfoReqVo reqVo = reqParamWarp.getParam();
-        LOGGER.info("bgUserInfo rec param : {}",reqVo.toString());
+        LOGGER.info("bgUserInfo rec param : {}",JSON.toJSONString(reqVo));
         BgUserInfoRespVo respVo = new BgUserInfoRespVo();
         respVo.setBgUserId("1");
         respVo.setBgUserName("1");
@@ -147,8 +169,25 @@ public class BgUserController {
         return RespWarp.SUCCESS(respVo);
     }
 
-    //创建用户请求vo对象转换到dto对象
-    private CreateBgUserDto conversionReqVo2Dto(BgUserCreateReqVo reqVo){
+    /**
+     * 后台用户登录请求vo对象转换到dto对象
+     * @param reqVo 后台用户登录请求vo对象
+     * @return 后台用户登录dto对象
+     */
+    private static LoginDto conversionLoginReqVo2Dto(BgUserLoginReqVo reqVo) {
+        LoginDto loginDto = new LoginDto();
+        loginDto.setBgUserAccount(reqVo.getBgUserAccount());
+        loginDto.setPassword(reqVo.getPassword());
+        return loginDto;
+    }
+
+
+    /**
+     * 创建用户请求vo对象转换到dto对象
+     * @param reqVo 创建用户请求vo对象
+     * @return 创建用户dto对象
+     */
+    private CreateBgUserDto conversionCreateReqVo2Dto(BgUserCreateReqVo reqVo){
         CreateBgUserDto dto = new CreateBgUserDto();
         dto.setBgUserName(reqVo.getBgUserName());
         dto.setBgUserAccount(reqVo.getBgUserAccount());

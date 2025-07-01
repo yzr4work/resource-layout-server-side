@@ -28,6 +28,7 @@ subprojects {
 
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter"
+        implementation "com.alibaba.fastjson2:fastjson2:2.0.57"
         testImplementation platform("org.junit:junit-bom:5.10.0")
         testImplementation "org.junit.jupiter:junit-jupiter"
         testImplementation('org.springframework.boot:spring-boot-starter-test')

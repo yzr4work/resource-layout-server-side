@@ -60,6 +60,12 @@ public class RespWarp<T> {
         warp.setMessage(desc);
         return warp;
     }
+    public static  RespWarp BUSINESS_ERROR(String desc){
+        RespWarp warp = new RespWarp();
+        warp.setCode(RespCodeEnum.BUSINESS_ERROR.getCode());
+        warp.setMessage(desc);
+        return warp;
+    }
 
     public static <T> RespWarp<T> BUSINESS_ERROR(T data){
         RespWarp<T> warp = new RespWarp<T>(data);
@@ -71,6 +77,13 @@ public class RespWarp<T> {
         RespWarp warp = new RespWarp();
         warp.setCode(RespCodeEnum.BUSINESS_ERROR.getCode());
         warp.setMessage(RespCodeEnum.BUSINESS_ERROR.getDesc());
+        return warp;
+    }
+
+    public static  RespWarp ERROR_FROM_CODE_ENUM(RespCodeEnum codeEnum){
+        RespWarp warp = new RespWarp();
+        warp.setCode(codeEnum.getCode());
+        warp.setMessage(codeEnum.getDesc());
         return warp;
     }
 

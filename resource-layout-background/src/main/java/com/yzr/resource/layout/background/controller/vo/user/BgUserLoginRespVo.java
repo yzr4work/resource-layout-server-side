@@ -2,7 +2,7 @@ package com.yzr.resource.layout.background.controller.vo.user;
 
 public class BgUserLoginRespVo {
     private String bgUserToken;
-    private String bgUserId;
+    private String bgUserName;
 
     public String getBgUserToken() {
         return bgUserToken;
@@ -12,19 +12,19 @@ public class BgUserLoginRespVo {
         this.bgUserToken = bgUserToken;
     }
 
-    public String getBgUserId() {
-        return bgUserId;
+    public String getBgUserName() {
+        return bgUserName;
     }
 
-    public void setBgUserId(String bgUserId) {
-        this.bgUserId = bgUserId;
+    public void setBgUserName(String bgUserName) {
+        this.bgUserName = bgUserName;
     }
 
     @Override
     public String toString() {
         return "BgUserLoginRespVo{" +
                 "bgUserToken='" + bgUserToken + '\'' +
-                ", bgUserId='" + bgUserId + '\'' +
+                ", bgUserName='" + bgUserName + '\'' +
                 '}';
     }
 }

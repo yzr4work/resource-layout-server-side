@@ -14,4 +14,20 @@
         delete from bg_user where bg_user_id = #{bgUserId} and bg_user_account = #{bgUserAccount} limit 1;
     </delete>
 
+    <select id="findBgUser" parameterType="BgUserEntity" resultType="BgUserEntity">
+        select bg_user_id , bg_user_name, bg_user_account
+        <if test="bgUserId != null">
+            ,password
+        </if>
+        from bg_user
+        <where>
+            <if test="bgUserId != null">
+                bg_user_id = #{bgUserId}
+            </if>
+            <if test="bgUserAccount != null and password != null">
+                bg_user_account = #{bgUserAccount} and password = #{password}
+            </if>
+        </where>;
+    </select>
+
 </mapper>

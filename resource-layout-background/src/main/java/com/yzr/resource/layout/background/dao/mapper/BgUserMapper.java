@@ -9,4 +9,6 @@ public interface BgUserMapper {
     Integer createBgUser(BgUserEntity bgUser);
 
     Integer deleteBgUser(BgUserEntity bgUser);
+
+    BgUserEntity findBgUser(BgUserEntity bgUser);
 }
